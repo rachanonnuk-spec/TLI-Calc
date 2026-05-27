@@ -72,19 +72,19 @@ function Windrhytm() {
       </div>
 
       <div className="bg-white p-6 rounded-lg border border-gray-200 mb-8">
-        <span className="block text-lg font-bold mb-2">Current Cast Rate:</span>
+        <span className="block text-lg font-bold mb-2">Cast Rate ปัจจุบัน:</span>
         <p className="text-3xl font-bold text-blue-600 mb-2">
-          {serverCastTime.toFixed(5)} s <span className="text-sm text-gray-400 font-normal">({rawCastTime.toFixed(5)} s raw)</span>
+          {serverCastTime.toFixed(5)} s <span className="text-sm text-red-600 font-medium">({rawCastTime.toFixed(5)} s raw)</span>
         </p>
         <div className="space-y-1 text-sm text-gray-500 border-t pt-4">
           <p>Effective Cast Speed: <span className="font-mono font-bold text-gray-700">{totalEffectiveCastSpeed.toFixed(2)}%</span></p>
-          <p>Calculation: {inputs.cooldown} / (1 + ({inputs.bonus}% × {inputs.cdr}%)) / (1 + {inputs.castSpeed + inputs.additionalCastSpeed}%)</p>
-          <p>Rounding: Value is rounded up to the next 0.03333s tick (30Hz).</p>
+          <p>Calculation/สูตรคำนวน : {inputs.cooldown} / (1 + ({inputs.bonus}% × {inputs.cdr}%)) / (1 + {inputs.castSpeed + inputs.additionalCastSpeed}%)</p>
+          <p>Tick rate: 0.03333s tick (30Hz).</p>
         </div>
       </div>
 
       <div id="breakpoints">
-        <h6 className="text-xl font-bold mb-4">Breakpoints Guide</h6>
+        <h6 className="text-xl text-black font-bold mb-4">ข้อมูลBreakpointsถัดไป</h6>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <span className="font-bold block mb-4 border-b pb-2">Cooldown Rate (%)</span>

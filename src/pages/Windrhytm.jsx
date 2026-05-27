@@ -30,94 +30,156 @@ function Windrhytm() {
   const totalEffectiveCastSpeed = (windRhythmMult * castSpeedMult - 1) * 100;
 
   return (
-    <div id="Wind-Rhythm" className="p-8 max-w-4xl mx-auto bg-gray-50 rounded-xl shadow-md mt-10">
-      <h5 className="text-2xl font-bold mb-6 text-gray-800">Wind Rhytm Cast Rate Calculator</h5>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-600">Base Cooldown (s)</label>
-          <select 
-            name="cooldown"
-            value={inputs.cooldown}
-            onChange={handleInputChange}
-            className="border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
-          >
-            <option value="0.5">0.5</option>
-            <option value="0.6">0.6</option>
-            <option value="0.7">0.7</option>
-            <option value="0.8">0.8</option>
-          </select>
-        </div>
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-600">Wind Rhytm Bonus (%)</label>
-          <input 
-            name="bonus" type="number" value={inputs.bonus} onChange={handleInputChange}
-            className="border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none" 
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-600">Cooldown Rate (%)</label>
-          <input 
-            name="cdr" type="number" value={inputs.cdr} onChange={handleInputChange}
-            className="border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none" 
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-600">Cast Speed Bonus (%)</label>
-          <input 
-            name="castSpeed" type="number" value={inputs.castSpeed} onChange={handleInputChange}
-            className="border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none" 
-          />
-        </div>
+    <div id="Wind-Rhythm" className="p-6 md:p-8 max-w-6xl mx-auto mt-10" style={{fontFamily: 'Space Grotesk, sans-serif'}}>
+      {/* Header */}
+      <div className="mb-8 border-b-8 pb-4" style={{borderColor: '#1c1b1b', color: '#1c1b1b'}}>
+        <h2 className="text-5xl font-bold uppercase tracking-tighter" style={{color: '#a93100'}}>WIND RHYTHM</h2>
+        <p className="text-lg mt-3" style={{color: '#5c4037'}}>Advanced cast rate and frame-perfect rhythmic combat cycle analyzer</p>
       </div>
 
-      <div className="bg-white p-6 rounded-lg border border-gray-200 mb-8">
-        <span className="block text-lg font-bold mb-2">Cast Rate ปัจจุบัน:</span>
-        <p className="text-3xl font-bold text-blue-600 mb-2">
-          {serverCastTime.toFixed(5)} s <span className="text-sm text-red-600 font-medium">({rawCastTime.toFixed(5)} s raw)</span>
-        </p>
-        <div className="space-y-1 text-sm text-gray-500 border-t pt-4">
-          <p>Effective Cast Speed: <span className="font-mono font-bold text-gray-700">{totalEffectiveCastSpeed.toFixed(2)}%</span></p>
-          <p>Calculation/สูตรคำนวน : {inputs.cooldown} / (1 + ({inputs.bonus}% × {inputs.cdr}%)) / (1 + {inputs.castSpeed + inputs.additionalCastSpeed}%)</p>
-          <p>Tick rate: 0.03333s tick (30Hz).</p>
-        </div>
-      </div>
-
-      <div id="breakpoints">
-        <h6 className="text-xl text-black font-bold mb-4">ข้อมูลBreakpointsถัดไป</h6>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded-lg border border-gray-200">
-            <span className="font-bold block mb-4 border-b pb-2">Cooldown Rate (%)</span>
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="text-gray-400"><th>CDR %</th><th>Server (s)</th><th>Raw (s)</th></tr>
-              </thead>
-              <tbody className="divide-y">
-                <tr><td>6</td><td>0.56667</td><td>0.56604</td></tr>
-                <tr><td>13</td><td>0.53333</td><td>0.53097</td></tr>
-                <tr><td>20</td><td>0.50000</td><td>0.50000</td></tr>
-                <tr><td>29</td><td>0.46667</td><td>0.46512</td></tr>
-                <tr><td>39</td><td>0.43333</td><td>0.43165</td></tr>
-                <tr><td>50</td><td>0.40000</td><td>0.40000</td></tr>
-              </tbody>
-            </table>
+      {/* Main Grid: Inputs + Results */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
+        {/* LEFT: Calculator Inputs */}
+        <section className="md:col-span-4 flex flex-col gap-4">
+          <div className="bg-white border-4 p-6" style={{borderColor: '#1c1b1b', boxShadow: '8px 8px 0px 0px rgba(28, 27, 27, 1)'}}>
+            <div className="flex items-center justify-between mb-4 border-b-4 pb-2" style={{borderColor: '#1c1b1b', color: '#1c1b1b'}}>
+              <h3 className="font-bold uppercase tracking-wide text-sm">CALC PARAMETERS</h3>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block font-bold text-xs uppercase mb-2" style={{color: '#5c4037'}}>Base Cooldown (s)</label>
+                <select 
+                  name="cooldown"
+                  value={inputs.cooldown}
+                  onChange={handleInputChange}
+                  className="w-full border-4 p-3 font-bold uppercase outline-none cursor-pointer"
+                  style={{borderColor: '#1c1b1b', backgroundColor: '#f6f3f2', color: '#1c1b1b'}}
+                >
+                  <option value="0.5">0.5</option>
+                  <option value="0.6">0.6</option>
+                  <option value="0.7">0.7</option>
+                  <option value="0.8">0.8</option>
+                </select>
+              </div>
+              <div>
+                <label className="block font-bold text-xs uppercase mb-2" style={{color: '#5c4037'}}>Wind Rhythm Bonus %</label>
+                <input 
+                  name="bonus" type="number" value={inputs.bonus} onChange={handleInputChange}
+                  className="w-full border-4 p-3 font-bold outline-none"
+                  style={{borderColor: '#1c1b1b', backgroundColor: '#f6f3f2', color: '#1c1b1b'}}
+                />
+              </div>
+              <div>
+                <label className="block font-bold text-xs uppercase mb-2" style={{color: '#5c4037'}}>Cooldown Rate %</label>
+                <input 
+                  name="cdr" type="number" value={inputs.cdr} onChange={handleInputChange}
+                  className="w-full border-4 p-3 font-bold outline-none"
+                  style={{borderColor: '#1c1b1b', backgroundColor: '#f6f3f2', color: '#1c1b1b'}}
+                />
+              </div>
+              <div>
+                <label className="block font-bold text-xs uppercase mb-2" style={{color: '#5c4037'}}>Cast Speed Bonus %</label>
+                <input 
+                  name="castSpeed" type="number" value={inputs.castSpeed} onChange={handleInputChange}
+                  className="w-full border-4 p-3 font-bold outline-none"
+                  style={{borderColor: '#1c1b1b', backgroundColor: '#f6f3f2', color: '#1c1b1b'}}
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white p-4 rounded-lg border border-gray-200">
-            <span className="font-bold block mb-4 border-b pb-2">Cast Speed Bonus (%)</span>
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="text-gray-400"><th>Cast %</th><th>Server (s)</th><th>Raw (s)</th></tr>
-              </thead>
-              <tbody className="divide-y">
-                <tr><td>15</td><td>0.56667</td><td>0.56604</td></tr>
-                <tr><td>32</td><td>0.53333</td><td>0.53191</td></tr>
-                <tr><td>50</td><td>0.50000</td><td>0.50000</td></tr>
-                <tr><td>72</td><td>0.46667</td><td>0.46584</td></tr>
-                <tr><td>97</td><td>0.43333</td><td>0.43228</td></tr>
-                <tr><td>125</td><td>0.40000</td><td>0.40000</td></tr>
-              </tbody>
-            </table>
+          {/* Result Box */}
+          <div className="p-6 border-4" style={{backgroundColor: '#1c1b1b', borderColor: '#1c1b1b', boxShadow: '8px 8px 0px 0px #7000ff', color: '#fcf9f8'}}>
+            <h3 className="font-bold text-xs uppercase mb-2" style={{color: '#00eefc'}}>CURRENT RESULT</h3>
+            <div>
+              <p className="text-xs uppercase opacity-70">Cast Rate ปัจจุบัน</p>
+              <p className="text-4xl font-bold" style={{color: '#00eefc'}}>{serverCastTime.toFixed(5)}s</p>
+              <p className="text-xs opacity-80 mt-1">Raw: {rawCastTime.toFixed(5)}s</p>
+            </div>
+          </div>
+        </section>
+
+        {/* RIGHT: Tables & Stats */}
+        <section className="md:col-span-8 flex flex-col gap-4">
+          {/* Effective Stats */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="border-4 p-4" style={{backgroundColor: '#d34000', borderColor: '#1c1b1b', color: '#fffbff', boxShadow: '4px 4px 0px 0px #1c1b1b'}}>
+              <h4 className="font-bold text-xs uppercase mb-2">Effective Cast Speed</h4>
+              <p className="text-3xl font-bold">{totalEffectiveCastSpeed.toFixed(1)}%</p>
+            </div>
+            <div className="border-4 p-4" style={{backgroundColor: '#f6f3f2', borderColor: '#1c1b1b'}}>
+              <h4 className="font-bold text-xs uppercase mb-2" style={{color: '#1c1b1b'}}>Server Tick</h4>
+              <p className="text-3xl font-bold" style={{color: '#a93100'}}>0.03333s</p>
+            </div>
+          </div>
+
+          {/* Breakpoints Tables */}
+          <div className="bg-white border-4 p-6" style={{borderColor: '#1c1b1b', boxShadow: '8px 8px 0px 0px rgba(28, 27, 27, 1)'}}>
+            <h3 className="font-bold text-sm uppercase mb-4 border-b-4 pb-2" style={{borderColor: '#1c1b1b', color: '#1c1b1b'}}>ข้อมูล BREAKPOINTS ถัดไป</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* CDR Table */}
+              <div>
+                <h4 className="font-bold text-xs uppercase mb-3 border-l-4 pl-2" style={{color: '#a93100', borderColor: '#a93100'}}>Cooldown Rate (%)</h4>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm" style={{fontFamily: 'JetBrains Mono, monospace'}}>
+                    <thead className="border-b-2" style={{borderColor: '#1c1b1b', backgroundColor: '#f6f3f2'}}>
+                      <tr style={{color: '#916f65'}}>
+                        <th className="p-2 text-left font-bold">%</th>
+                        <th className="p-2 text-left font-bold">Server (s)</th>
+                        <th className="p-2 text-left opacity-60">Raw (s)</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{color: '#1c1b1b'}}>
+                      <tr style={{backgroundColor: '#00eefc'}}>
+                        <td className="p-2 font-bold">6</td>
+                        <td className="p-2 font-bold">0.56667</td>
+                        <td className="p-2 opacity-60">0.56604</td>
+                      </tr>
+                      <tr><td className="p-2">13</td><td className="p-2 font-bold">0.53333</td><td className="p-2 opacity-60">0.53097</td></tr>
+                      <tr><td className="p-2">20</td><td className="p-2 font-bold">0.50000</td><td className="p-2 opacity-60">0.50000</td></tr>
+                      <tr><td className="p-2">29</td><td className="p-2 font-bold">0.46667</td><td className="p-2 opacity-60">0.46512</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Cast Speed Table */}
+              <div>
+                <h4 className="font-bold text-xs uppercase mb-3 border-l-4 pl-2" style={{color: '#7000ff', borderColor: '#7000ff'}}>Cast Speed Bonus (%)</h4>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm" style={{fontFamily: 'JetBrains Mono, monospace'}}>
+                    <thead className="border-b-2" style={{borderColor: '#1c1b1b', backgroundColor: '#f6f3f2'}}>
+                      <tr style={{color: '#916f65'}}>
+                        <th className="p-2 text-left font-bold">%</th>
+                        <th className="p-2 text-left font-bold">Server (s)</th>
+                        <th className="p-2 text-left opacity-60">Raw (s)</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{color: '#1c1b1b'}}>
+                      <tr style={{backgroundColor: '#00eefc'}}>
+                        <td className="p-2 font-bold">15</td>
+                        <td className="p-2 font-bold">0.56667</td>
+                        <td className="p-2 opacity-60">0.56604</td>
+                      </tr>
+                      <tr><td className="p-2">32</td><td className="p-2 font-bold">0.53333</td><td className="p-2 opacity-60">0.53191</td></tr>
+                      <tr><td className="p-2">50</td><td className="p-2 font-bold">0.50000</td><td className="p-2 opacity-60">0.50000</td></tr>
+                      <tr><td className="p-2">72</td><td className="p-2 font-bold">0.46667</td><td className="p-2 opacity-60">0.46584</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Optimization Hint */}
+      <div className="bg-white border-4 p-6" style={{borderColor: '#1c1b1b', boxShadow: '12px 12px 0px 0px #7000ff'}}>
+        <div className="flex gap-4">
+          <div className="text-4xl" style={{color: '#7000ff'}}>💡</div>
+          <div>
+            <h3 className="font-bold text-lg uppercase mb-2" style={{color: '#1c1b1b'}}>OPTIMIZATION HINT: SERVER TICKS</h3>
+            <p style={{color: '#5c4037'}}>The game engine processes actions at 30 FPS intervals (0.03333s). If your <span className="font-bold" style={{color: '#a93100'}}>Raw Cast Speed</span> falls between two 0.033s increments, it rounds up to the next server tick. Target the <span className="font-bold" style={{color: '#006970'}}>Server (s)</span> values to avoid wasted stats.</p>
           </div>
         </div>
       </div>
